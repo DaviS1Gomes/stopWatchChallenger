@@ -1,32 +1,34 @@
+let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+let timerRef = document.querySelector('.timerDisplay');
+let int = null;
 
-let [milliseconds,seconds,minutes,hours] = [0,0,0,0],
-    timerRef = document.querySelector('.timerDisplay'),
-    int;
-
-document.getElementById('startTimer').addEventListener('click', () => {
+document.getElementById('startTimer').addEventListener('click', ()=>{
+    if(int!==null){
+        clearInterval(int);
+    }
     int = setInterval(displayTimer,10);
     timerRef.classList.remove('paused');
 });
 
-document.getElementById('pauseTimer').addEventListener('click', () => {
+document.getElementById('pauseTimer').addEventListener('click', ()=>{
     clearInterval(int);
     timerRef.classList.add('paused');
 });
 
-document.getElementById('resetTimer').addEventListener('click', () => {
+document.getElementById('resetTimer').addEventListener('click', ()=>{
     clearInterval(int);
-    seconds = 0;
     [milliseconds,seconds,minutes,hours] = [0,0,0,0];
-    timerRef.innerHTML = '00 : 00 : 00 : 000';
+    timerRef.innerHTML = '00 : 00 : 00 : 000 ';
     timerRef.classList.remove('paused');
+
 });
 
-function displayTimer() {
-    milliseconds += 10;
+function displayTimer(){
+    milliseconds+=10;
     if(milliseconds == 1000){
         milliseconds = 0;
         seconds++;
-        if(seconds == 60) {
+        if(seconds == 60){
             seconds = 0;
             minutes++;
             if(minutes == 60){
@@ -43,16 +45,14 @@ function displayTimer() {
     timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
 }
 
-displayTimer()
-
 function darkModeButton() {
     const bntMode = document.body.querySelector('.bntMode');
     const containerBtnMode = document.querySelector('.containerBtnMode');
     const bodyBackgroud = document.body;
     const containerWhite = document.querySelector('.container');
-    const buttonWhite = document.querySelector('.btn');
-    const buttonWhite2 = document.querySelector('.btn2');
-    const buttonWhite3 = document.querySelector('.btn3');
+    const buttonWhite = document.querySelector('.btn')
+    const buttonWhite2 = document.querySelector('.btn2')
+    const buttonWhite3 = document.querySelector('.btn3')
 
     bntMode.addEventListener('click', () => {
         bntMode.classList.toggle('animation');
@@ -61,8 +61,6 @@ function darkModeButton() {
         containerWhite.classList.toggle('white');
         timerRef.classList.toggle('white');
         buttonWhite.classList.toggle('white');
-        buttonWhite2.classList.toggle('white');
-        buttonWhite3.classList.toggle('white');
     })
 }
 darkModeButton()
